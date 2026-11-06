@@ -11,17 +11,31 @@
     <button id="passed">Passed</button>
     <button id="sort_by_total">Sort by total</button>
     <table id="board">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Maths</th>
-                <th>Science</th>
-                <th>English</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Maths</th>
+          <th>Science</th>
+          <th>English</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
     </table>
     <pre id="json"></pre>
+    <h2>Test JSON</h2>
+
+    <textarea
+      id="jsonInput"
+      rows="8"
+      cols="50"
+      placeholder="Paste JSON here"
+    ></textarea>
+
+    <br />
+
+    <button id="parseJson">Parse JSON</button>
+
+    <p id="message"></p>
     <script src="script.js"></script>
   </body>
 </html>
