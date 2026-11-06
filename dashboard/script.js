@@ -52,3 +52,55 @@ const report=students.map((s)=>{
 });
 
 console.table(report);
+
+// filter(): pass or fail 
+
+const passed=students.filter((s)=>{
+    return [s.maths,s.science,s.english].every((mark)=>{
+        return mark>= 40;
+    });
+});
+
+const failedCount=students.length - passed.length;
+
+console.table(passed);
+console.log(`Number of failed students: ${failedCount}`);
+
+//reduce(): Statistics
+
+// Average
+const classAverage = students.reduce((sum,s)=>{
+     return sum+=total(s);
+},0) / students.length;
+
+// find topper
+
+const topper = students.reduce((top, s) => {
+    if (total(s) > total(top)) {
+        return s;
+    }
+    return top;
+}, students[0]);
+
+console.log(`Topper: ${topper.name}`);
+console.log(`Total: ${total(topper)}`);
+
+// subject averages
+
+const mathsAverage=students.reduce((sum,s)=>{
+    return sum+=s.maths;
+},0)/students.length;
+
+const scienceAverage = students.reduce((sum, s) => {
+    return sum+=s.science;
+}, 0) / students.length;
+
+const englishAverage = students.reduce((sum, s) => {
+    return sum+=s.english;
+}, 0) / students.length;
+
+console.log(`Class Average: ${classAverage}`);
+console.log(`Topper: ${topper.name}`);
+console.log(`Maths Average: ${mathsAverage}`);
+console.log(`Science Average: ${scienceAverage}`);
+console.log(`English Average: ${englishAverage}`);
