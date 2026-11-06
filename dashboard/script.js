@@ -47,7 +47,7 @@ const report=students.map((s)=>{
         name:s.name,
         total:total(s),
         average:average(s),
-        grade:grade(average(s))
+        grade:grade(average(s)),
     };
 });
 
@@ -57,7 +57,7 @@ console.table(report);
 
 const passed=students.filter((s)=>{
     return [s.maths,s.science,s.english].every((mark)=>{
-        return mark>= 40;
+        return mark >= 40;
     });
 });
 
@@ -65,6 +65,14 @@ const failedCount=students.length - passed.length;
 
 console.table(passed);
 console.log(`Number of failed students: ${failedCount}`);
+
+// Create report for passed students
+const passedReport = passed.map((s) => ({
+  name: s.name,
+  total: total(s),
+  average: average(s),
+  grade: grade(average(s)),
+}));
 
 //reduce(): Statistics
 
@@ -88,15 +96,15 @@ console.log(`Total: ${total(topper)}`);
 // subject averages
 
 const mathsAverage=students.reduce((sum,s)=>{
-    return sum+=s.maths;
+    return sum + s.maths;
 },0)/students.length;
 
 const scienceAverage = students.reduce((sum, s) => {
-    return sum+=s.science;
+    return sum + s.science;
 }, 0) / students.length;
 
 const englishAverage = students.reduce((sum, s) => {
-    return sum+=s.english;
+    return sum + s.english;
 }, 0) / students.length;
 
 console.log(`Class Average: ${classAverage}`);
@@ -104,3 +112,65 @@ console.log(`Topper: ${topper.name}`);
 console.log(`Maths Average: ${mathsAverage}`);
 console.log(`Science Average: ${scienceAverage}`);
 console.log(`English Average: ${englishAverage}`);
+
+// sort(): Student rankings
+
+const sorted= [...report].sort((a,b)=>{
+    return b.total - a.total;
+});
+
+const ranked=sorted.map((s,i)=>({
+    ...s,rank:i+1
+}));
+
+console.table(ranked);
+
+
+// Get the table element
+const board = document.getElementById("board");
+
+// Function to display student data
+function showTable(list) {
+  board.innerHTML = `
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Total</th>
+        <th>Average</th>
+        <th>Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${list
+        .map(
+          (s) => `
+            <tr>
+              <td>${s.name}</td>
+              <td>${s.total}</td>
+              <td>${s.average}</td>
+              <td>${s.grade}</td>
+            </tr>
+          `,
+        )
+        .join("")}
+    </tbody>
+  `;
+}
+
+// All students button
+document.getElementById("all").addEventListener("click", () => {
+  showTable(report);
+});
+
+// Passed students button
+document.getElementById("passed").addEventListener("click", () => {
+  showTable(passedReport);
+});
+
+// Sort by total button
+document.getElementById("sort_by_total").addEventListener("click", () => {
+  showTable(ranked);
+});
+
+// Display all students initially
+showTable(report);
